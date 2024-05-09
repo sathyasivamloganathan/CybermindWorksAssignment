@@ -1,1 +1,45 @@
 
+// Debouncing example
+function debounce(func, delay) {
+  let timeoutId;
+  
+  return function(...args) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      func.apply(this, args);
+    }, delay);
+  };
+}
+
+const handleSearch = debounce((query) => {
+  console.log("Searching for:", query);
+}, 300);
+
+handleSearch("react");
+handleSearch("reactjs");
+handleSearch("react hooks");
+
+// Throttling example
+function throttle(func, delay) {
+  let isThrottled = false;
+
+  return function(...args) {
+    if (!isThrottled) {
+      func.apply(this, args);
+      isThrottled = true;
+      setTimeout(() => {
+        isThrottled = false;
+      }, delay);
+    }
+  };
+}
+
+const handleScroll = throttle(() => {
+  console.log("Scrolled!");
+}, 1000);
+
+window.addEventListener("scroll", handleScroll);
+
+
+Debouncing(debounce): Delays function execution until a pause in events.
+Throttling(throttle): Limits function execution rate to at most once per specified interval.
